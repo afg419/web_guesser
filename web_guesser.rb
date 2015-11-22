@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-n = rand(100)
+SECRET_NUMBER = rand(10)
 m = "Let's play!"
 g = "awaiting first guess"
 
@@ -13,12 +13,20 @@ def cond_hash
   }
 end
 
-get '/' do
-  if params["guess"]
-    g = params["guess"].to_i
-    m = cond_hash[g <=> n][g < n ? g < n - 5 : g > n + 5]
+def check_guess(guess)
+  unless guess.nil?
+    cond_hash[guess <=> SECRET_NUMBER][guess < SECRET_NUMBER ? guess < SECRET_NUMBER - 5 : guess > SECRET_NUMBER + 5]
+  else
+    "Let's play!"
   end
-  erb :index, :locals => {:n => n, :m => m, :g => g}
+end
+
+get '/' do
+    g = params["guess"]
+    c = params["cheat"]
+    g = g.to_i unless g.nil?
+    m = check_guess(g)
+    erb :index, :locals => {:n => SECRET_NUMBER, :m => m, :g => g, :c => c}
 end
 
 

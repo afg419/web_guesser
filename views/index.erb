@@ -1,11 +1,17 @@
+<%= require 'pry' %>
+
  <html>
-  <head>HEY!</head>
+  <head></head>
   <body>
     <p>
-      The number is: <%= n %>
+      The number is: <%= if n == g || c == "true"
+        n
+      else
+        "Keep guessing!"
+      end %>
     </p>
     <p>
-      Your guess is: <%= g %>      
+      Your guess is: <%= g %>
     </p>
     <p>
       <%= m %>
